@@ -28,4 +28,4 @@ jobs:
       with:
         directory: gh-pages
         repository: judge-judy/judge-judy.github.io
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GH_DEPLOY_TOKEN }}
