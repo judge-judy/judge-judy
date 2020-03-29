@@ -16,7 +16,7 @@ jobs:
     - run: npm run build
     - name: Commit and deploy changes
       run: |
-        git clone https://github.com/judge-judy/judge-judy.git --branch gh-pages --single-branch gh-pages
+        git clone https://github.com/judge-judy/judge-judy.github.io.git gh-pages/
         cp -r build/* gh-pages/
         cd gh-pages
         git config --local user.email "action@github.com"
@@ -26,6 +26,6 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        branch: gh-pages
         directory: gh-pages
+        repository: judge-judy/judge-judy.github.io
         github_token: ${{ secrets.GITHUB_TOKEN }}
