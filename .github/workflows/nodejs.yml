@@ -1,0 +1,30 @@
+name: Deploy web app
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CI: "true"
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - run: npm run build
+    - name: Commit and deploy changes
+      run: |
+        git clone https://github.com/judge-judy/judge-judy.git --branch gh-pages --single-branch gh-pages
+        cp -r build/* gh-pages/
+        cd gh-pages
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update gh-pages deployment" -a || true
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        directory: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
