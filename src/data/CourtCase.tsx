@@ -9,7 +9,7 @@ export default class CourtCase {
                 readonly date: Date,
                 readonly detailsURL: string,
                 readonly description: string) {
-        if (title.indexOf(" v. ") == -1) {
+        if (title.indexOf(" v. ") === -1) {
             throw Error("Invalid title: " + title);
         }
         [this.plaintiff, this.defendant] = title.split(" v. ");
@@ -23,7 +23,7 @@ export function getCases() : CourtCase[] {
         if (!caseObject.title || !caseObject.date || !caseObject.details_url || !caseObject.description) {
             continue;
         }
-        if (caseObject.title.indexOf(" v. ") == -1) {
+        if (caseObject.title.indexOf(" v. ") === -1) {
             continue;
         }
         cases.push(new CourtCase(
