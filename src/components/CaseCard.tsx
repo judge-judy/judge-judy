@@ -18,7 +18,7 @@ const formatDate = (d: Date) => {
 const CaseSummaryCard: FunctionComponent<CaseSummaryProps> = ({courtCase} : CaseSummaryProps) => {
     const {plaintiff, defendant, date, description, docketNumber} = courtCase;
 
-    return <Card body>
+    return <Card className="my-2" body>
         <CardTitle tag="h5">
             { plaintiff } <span className="font-weight-bold font-italic">v.</span> { defendant }
         </CardTitle>
