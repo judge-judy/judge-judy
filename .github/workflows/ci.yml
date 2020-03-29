@@ -5,7 +5,9 @@ on: ["push", "pull_request"]
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    # Requried by react-scripts to know this is a CI environment.
+    env:
+      CI: "true"
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node.js environment
@@ -14,3 +16,5 @@ jobs:
       run: npm install
     - name: Run tests
       run: npm test
+    - name: Perform full build
+      run: npm run build
