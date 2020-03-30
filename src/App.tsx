@@ -5,8 +5,7 @@ import {
 } from "react-router-dom";
 import {
   Container, Row, Col,
-  Form, Input, InputGroup, InputGroupAddon, InputGroupText,
-  Button
+  Form, Input, InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
 import Octicon, { Search } from '@primer/octicons-react';
 
