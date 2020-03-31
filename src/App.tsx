@@ -144,14 +144,17 @@ class CasePage extends React.Component<CasePageProps, CasePageState> {
                     <p className="text-lead">
                       Decided on <span className="font-italic">{ date_decided ? formatDate(date_decided) : '' }</span>
                       { decision
-                        ? ` in favor of ${decision.winningParty} with a ${decision.majorityVote}-${decision.minorityVote} vote` 
+                        ? <>
+                            {' '}in favor of <span className="font-weight-bold">{decision.winningParty}</span> with a
+                            {' '}{decision.majorityVote}-{decision.minorityVote}
+                          </>
                         : '' }.
                     </p>
                   </dd>
                   : ''}
                 </dl>
                 <hr className="my-4" />
-                <Row className="text-center">
+                <Row className="text-center justify-content-center">
                 { judges.length > 0
                   ? judges.map(j => j.renderPicture())
                   : ''
