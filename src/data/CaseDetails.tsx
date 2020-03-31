@@ -2,7 +2,6 @@ import React from 'react';
 import { UncontrolledTooltip } from 'reactstrap';
 import { splitTitle } from './CourtCase';
 
-let judgeId = 0;
 
 export class Judge {
     constructor(
