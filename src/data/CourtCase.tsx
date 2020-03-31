@@ -9,11 +9,18 @@ export default class CourtCase {
                 readonly date: Date,
                 readonly detailsURL: string,
                 readonly description: string) {
-        if (title.indexOf(" v. ") === -1) {
-            throw Error("Invalid title: " + title);
-        }
-        [this.plaintiff, this.defendant] = title.split(" v. ");
+        const { plaintiff, defendant } = splitTitle(title);
+        this.plaintiff = plaintiff;
+        this.defendant = defendant;
     }
+}
+
+export function splitTitle(title: string) : {plaintiff: string, defendant: string} {
+    if (title.indexOf(" v. ") === -1) {
+        throw Error("Invalid title: " + title);
+    }
+    const [plaintiff, defendant] = title.split(" v. ");
+    return { plaintiff, defendant };
 }
 
 export function getCases() : CourtCase[] {
@@ -35,6 +42,6 @@ export function getCases() : CourtCase[] {
 
     cases.sort((c1, c2) => c1.date.getTime() - c2.date.getTime());
     cases.reverse();
-    
+
     return cases;
 }
