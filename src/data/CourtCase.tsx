@@ -77,6 +77,9 @@ export function getCases(): CourtCase[] {
   const cases = [];
 
   for (const caseObject of case_summaries) {
+    if (!caseObject.description && caseObject.question) {
+      caseObject.description = stripHtml(caseObject.question);
+    }
     if (!caseObject.title || !caseObject.date || !caseObject.details_url || !caseObject.description) {
       continue;
     }
@@ -95,4 +98,11 @@ export function getCases(): CourtCase[] {
   cases.reverse();
 
   return cases;
+}
+
+// Quick little utility function to just get text from known safe HTML blobs
+function stripHtml(html: string) : string {
+   var tmp = document.createElement("div");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
 }

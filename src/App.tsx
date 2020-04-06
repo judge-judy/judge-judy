@@ -5,11 +5,13 @@ import {
 } from "react-router-dom";
 import {
   Container, Row, Col,
-  Form, Input, InputGroup, InputGroupAddon, InputGroupText,
+  Button, Form, Input, InputGroup, InputGroupAddon, InputGroupText,
+  Card, CardBody, CardTitle, CardText,
+  UncontrolledCollapse
 } from "reactstrap";
 import Octicon, { Search } from '@primer/octicons-react';
 
-import { getCases, Category } from './data/CourtCase';
+import CourtCase, { getCases, colorForCategory, Category } from './data/CourtCase';
 import CasePage from './CasePage';
 import CaseSummaryCard from './components/CaseCard';
 import './App.css';
@@ -96,10 +98,38 @@ const getCategoryDescription = (category: Category) => {
   }
 }
 
+const getCasesForCategory = (category: Category): CourtCase[] => {
+  switch (category) {
+    case Category.Desegregation:
+      return ['84-6263'].map(id => casesById.get(id));
+    case Category.CivilRights:
+      return [].map(id => casesById.get(id));
+    case Category.Abortion:
+      return ['70-18', '99-830', '15-274'].map(id => casesById.get(id));
+    case Category.Elections:
+      return [].map(id => casesById.get(id));
+  }
+}
+
 type CategoryExpanderProps = { category: Category }
 const CategoryExpander: FunctionComponent<CategoryExpanderProps> = ({ category }: CategoryExpanderProps) => {
+  const uniqueID = `view-${category.replace(' ', '-')}`;
+  
   const description = getCategoryDescription(category);
-  return description;
+  const cases = getCasesForCategory(category);
+
+  return <>
+    <Card className="mt-4" outline color={colorForCategory(category)}>
+      <CardBody>
+        <CardTitle tag="h5">{category}</CardTitle>
+        <CardText>{description}</CardText>
+        <Button id={uniqueID}>View Cases</Button>
+      </CardBody>
+    </Card>
+    <UncontrolledCollapse toggler={`#${uniqueID}`}>
+      { cases.map(c => <CaseSummaryCard key={c.docketNumber} courtCase={c} />) }
+    </UncontrolledCollapse>
+  </>;
 }
 
 // {} types for both props and state so far...
