@@ -88,26 +88,34 @@ function CasePageRouter() {
 const getCategoryDescription = (category: Category) => {
   switch (category) {
     case Category.Desegregation:
-      return <></>;
+      return `The U.S has had a long history of discrimination in terms of both races
+        and gender. These are some of the landmark cases that track the
+        legal issues around this topic.`;
     case Category.CivilRights:
-      return <></>;
+      return `The bill of rights covers are a rich set of inalienable rights provided
+        to people in America. These cases revolve around the limitations and
+        enforcement of these rights.`;
     case Category.Abortion:
-      return <></>;
+      return `Abortion has been a hotly contested issue within America. With wide laws
+        criminimalizing it in the 1800s and 1900s, steps towards and away from
+        the right to abortion have been made.`;
     case Category.Elections:
-      return <></>;
+      return `Elections are a core part of our democracy. The laws that govern
+        campaigns, election spending, term limits are explored in these themed
+        cases.`;
   }
 }
 
 const getCasesForCategory = (category: Category): CourtCase[] => {
   switch (category) {
     case Category.Desegregation:
-      return ['84-6263'].map(id => casesById.get(id));
+      return ['163us537', '347us483', '84-6263'].map(id => casesById.get(id));
     case Category.CivilRights:
-      return [].map(id => casesById.get(id));
+      return ['492', '88-155', '94-329'].map(id => casesById.get(id));
     case Category.Abortion:
       return ['70-18', '99-830', '15-274'].map(id => casesById.get(id));
     case Category.Elections:
-      return [].map(id => casesById.get(id));
+      return ['75-436', '08-205'].map(id => casesById.get(id));
   }
 }
 
@@ -127,7 +135,7 @@ const CategoryExpander: FunctionComponent<CategoryExpanderProps> = ({ category }
       </CardBody>
     </Card>
     <UncontrolledCollapse toggler={`#${uniqueID}`}>
-      { cases.map(c => <CaseSummaryCard key={c.docketNumber} courtCase={c} />) }
+      { cases.map(c => <CaseSummaryCard key={c.docketNumber} outline={colorForCategory(category)} courtCase={c} />) }
     </UncontrolledCollapse>
   </>;
 }

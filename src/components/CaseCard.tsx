@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import CourtCase, { Category, colorForCategory } from '../data/CourtCase';
 
 type CaseSummaryProps = {
-  courtCase: CourtCase
+  courtCase: CourtCase,
+  outline?: string
 }
 
 export const formatDate = (d: Date) => {
@@ -22,10 +23,15 @@ export const getBadge = (c: Category | null, className = '') => {
   return <Badge className={className} color={colorForCategory(c)}>{c}</Badge>;
 }
 
-const CaseSummaryCard: FunctionComponent<CaseSummaryProps> = ({ courtCase }: CaseSummaryProps) => {
+const CaseSummaryCard: FunctionComponent<CaseSummaryProps> = ({ courtCase, outline }: CaseSummaryProps) => {
   const { plaintiff, defendant, date, description, docketNumber } = courtCase;
 
-  return <Card className="my-2" body>
+  let outlineProps = {};
+  if (outline) {
+    outlineProps = {'outline': true, 'color': outline};
+  }
+
+  return <Card className="my-2" body {...outlineProps}>
     <CardTitle tag="h5">
       {plaintiff} <span className="font-weight-bold font-italic">v.</span> {defendant}
     </CardTitle>
