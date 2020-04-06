@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   HashRouter as Router,
   Switch, Route, useParams
@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import Octicon, { Search } from '@primer/octicons-react';
 
-import { getCases } from './data/CourtCase';
+import { getCases, Category } from './data/CourtCase';
 import CasePage from './CasePage';
 import CaseSummaryCard from './components/CaseCard';
 import './App.css';
@@ -67,6 +67,10 @@ class HomePage extends React.Component<{}, {}> {
           </Col>
           <Col md="6">
             <h2>Cases by Topic</h2>
+            <CategoryExpander category={Category.Desegregation}></CategoryExpander>
+            <CategoryExpander category={Category.CivilRights}></CategoryExpander>
+            <CategoryExpander category={Category.Abortion}></CategoryExpander>
+            <CategoryExpander category={Category.Elections}></CategoryExpander>
           </Col>
         </Row>
       </Container>
@@ -77,6 +81,25 @@ class HomePage extends React.Component<{}, {}> {
 function CasePageRouter() {
   const { docketId } = useParams();
   return <CasePage courtCase={casesById.get(docketId)} />
+}
+
+const getCategoryDescription = (category: Category) => {
+  switch (category) {
+    case Category.Desegregation:
+      return <></>;
+    case Category.CivilRights:
+      return <></>;
+    case Category.Abortion:
+      return <></>;
+    case Category.Elections:
+      return <></>;
+  }
+}
+
+type CategoryExpanderProps = { category: Category }
+const CategoryExpander: FunctionComponent<CategoryExpanderProps> = ({ category }: CategoryExpanderProps) => {
+  const description = getCategoryDescription(category);
+  return description;
 }
 
 // {} types for both props and state so far...
