@@ -41,6 +41,7 @@ export default class CaseDetails {
         readonly plaintiff: string,
         readonly defendant: string,
         readonly factsOfTheCase: string,
+        readonly conclusion: string | null,
         readonly date_granted: Date | null,
         readonly date_argued: Date | null,
         readonly date_decided: Date | null,
@@ -87,6 +88,7 @@ export function parseCaseDetails(api_blob: any) : CaseDetails {
 
     return new CaseDetails(
         plaintiff, defendant, api_blob.facts_of_the_case ? api_blob.facts_of_the_case : '',
+        api_blob.conclusion ? api_blob.conclusion : null,
         date_granted, date_argued, date_decided,
         decision,
         judges

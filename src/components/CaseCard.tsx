@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Card, CardTitle, CardText, Badge } from 'reactstrap';
 import { Link } from "react-router-dom";
-import CourtCase from '../data/CourtCase';
+import CourtCase, { Category, colorForCategory } from '../data/CourtCase';
 
 type CaseSummaryProps = {
     courtCase: CourtCase
@@ -15,6 +15,13 @@ export const formatDate = (d: Date) => {
     return `${da} ${mo}, ${ye}`;
 }
 
+const getBadge = (c: Category | null) => {
+    if (c == null) {
+        return <></>;
+    }
+    return <Badge className="float-right" color={colorForCategory(c)}>{c}</Badge>;
+}
+
 const CaseSummaryCard: FunctionComponent<CaseSummaryProps> = ({courtCase} : CaseSummaryProps) => {
     const {plaintiff, defendant, date, description, docketNumber} = courtCase;
 
@@ -24,7 +31,7 @@ const CaseSummaryCard: FunctionComponent<CaseSummaryProps> = ({courtCase} : Case
         </CardTitle>
         <div className="clearfix mb-3">
             <span className="text-muted">{ formatDate(date) }</span>
-            <Badge className="float-right" color="secondary">Civil Rights</Badge>
+            { getBadge(courtCase.category) }
         </div>
         <CardText>
             { description }
