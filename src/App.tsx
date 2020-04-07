@@ -5,14 +5,16 @@ import {
 } from "react-router-dom";
 import {
   Container, Row, Col,
-  Button, Form, Input, InputGroup, InputGroupAddon, InputGroupText,
+  Button, Form,
   Card, CardBody, CardTitle, CardText,
   UncontrolledCollapse
 } from "reactstrap";
-import Octicon, { Search } from '@primer/octicons-react';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch } from 'react-instantsearch-dom';
 
 import CourtCase, { getCases, colorForCategory, Category } from './data/CourtCase';
 import CasePage from './CasePage';
+import SearchBar from './components/SearchBar';
 import CaseSummaryCard from './components/CaseCard';
 import './App.css';
 
@@ -45,14 +47,7 @@ class HomePage extends React.Component<{}, {}> {
           <Row>
             <Col sm="12" md={{ size: 4, offset: 4 }}>
               <Form className="justify-content-center" inline>
-                <InputGroup className="w-100" size="md">
-                  <Input className="form-control" type="search" name="search" id="searchQuery" placeholder="Search for case..." />
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText>
-                      <Octicon icon={Search} verticalAlign='middle' size='small'></Octicon>
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
+                <SearchBar />
               </Form>
             </Col>
           </Row>
@@ -140,20 +135,27 @@ const CategoryExpander: FunctionComponent<CategoryExpanderProps> = ({ category }
   </>;
 }
 
+const searchClient = algoliasearch(
+  '79H8GR8U9A',
+  '1b2d0670ff0df398224e31d9b0ab97de'
+);
+
 // {} types for both props and state so far...
 class App extends React.Component<{}, {}> {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/cases/:docketId">
-            <CasePageRouter />
-          </Route>
-        </Switch>
-      </Router>
+      <InstantSearch indexName="judge_judy" searchClient={searchClient}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/cases/:docketId">
+              <CasePageRouter />
+            </Route>
+          </Switch>
+        </Router>
+      </InstantSearch>
     );
   }
 }
