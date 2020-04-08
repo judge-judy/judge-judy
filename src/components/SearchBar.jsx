@@ -2,6 +2,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import {
   Highlight,
+  Snippet,
   Configure,
   connectAutoComplete,
 } from 'react-instantsearch-dom';
@@ -21,8 +22,9 @@ const AutoComplete = connectAutoComplete(
       getSuggestionValue={hit => hit.name}
       renderSuggestion={hit =>
         <>
-          <span>{ hit.title }</span>
-          <Highlight hit={hit} attribute="description" />
+          <Highlight hit={hit} attribute="title" /><br/>
+          <span class="text-muted">{hit.date_timestamp}</span><br/>
+          <Snippet hit={hit} attribute="question" />
         </>
       }
       inputProps={{
