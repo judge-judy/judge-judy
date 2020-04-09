@@ -3,10 +3,10 @@ import {
   Container, Row, Col, Jumbotron,
   Navbar, NavbarBrand, Nav,
   Spinner,
-  Form, Input, InputGroup, InputGroupAddon, InputGroupText
+  Form
 } from "reactstrap";
-import Octicon, { Search } from '@primer/octicons-react';
 
+import SearchBar from './components/SearchBar';
 import { formatDate, getBadge } from './components/CaseCard';
 import CaseDetails, { parseCaseDetails } from './data/CaseDetails';
 import CourtCase from './data/CourtCase';
@@ -136,14 +136,7 @@ export default class CasePage extends React.Component<CasePageProps, CasePageSta
         </NavbarBrand>
         <Nav className="mr-auto" navbar></Nav>
         <Form inline>
-          <InputGroup>
-            <Input className="form-control" type="search" name="search" id="searchQuery" placeholder="Search for case..." />
-            <InputGroupAddon addonType="append">
-              <InputGroupText>
-                <Octicon icon={Search} verticalAlign='middle' size='small'></Octicon>
-              </InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
+          <SearchBar />
         </Form>
       </Navbar>
 
